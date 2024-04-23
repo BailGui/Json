@@ -10,5 +10,39 @@
     ></script>
     <title>AJAX JQuery</title>
   </head>
-  <body></body>
+  <body>
+    <script>
+      $(document).ready(function () {
+        $("input").click(function () {
+          const button = document.querySelector("name");
+          let myvar = name.checked;
+          $.get(
+            `https://cat-fact.herokuapp.com/facts/random?animal_type=${myvar}&amount=1`,
+            function (facts, status) {
+              alert(facts.text);
+            }
+          );
+        });
+      });
+    </script>
+
+    <button>
+      <legend>Select an animal:</legend>
+
+      <div>
+        <input type="radio" id="cat" name="cat" value="cat" checked />
+        <label for="huey">Cat</label>
+      </div>
+
+      <div>
+        <input type="radio" id="dog" name="dog" value="dog" />
+        <label for="dewey">Dog</label>
+      </div>
+
+      <div>
+        <input type="radio" id="horse" name="horse" value="horse" />
+        <label for="louie">Horse</label>
+      </div>
+    </button>
+  </body>
 </html>
