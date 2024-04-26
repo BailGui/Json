@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <title>AJAX JQuery</title>
+  </head>
+  <body>
+    <div id="factsContainer"></div>
+    <button id="getFacts">Get fact</button>
+
+    <script>
+      $.get(`https://cat-fact.herokuapp.com/facts`, (data) => {
+        console.log(data);
+      });
+    </script>
+  </body>
+</html>
