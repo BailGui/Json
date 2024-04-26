@@ -15,9 +15,23 @@
     <button id="getFacts">Get fact</button>
 
     <script>
-      $.get(`https://cat-fact.herokuapp.com/facts`, (data) => {
-        console.log(data);
-      });
+      let factsContainer = document.querySelector("#factsContainer"),
+        btnGetFatcs = document.querySelector("#getFacts");
+
+      btnGetFatcs.addEventListener("click", getFact);
+
+      function getFact() {
+        $.get(
+          `https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1`,
+          (data) => {
+            console.log(data);
+            let fact = data.text;
+            factsContainer.insertAdjacentHTML("beforeend", `<p>${fact}</p>`);
+          }
+        );
+      }
+
+      getFact();
     </script>
   </body>
 </html>
