@@ -12,6 +12,14 @@
   </head>
   <body>
     <div id="factsContainer"></div>
+
+    <label for="catCategory">Cat</label>
+    <input type="radio" id="catCategory" name="animalType" value="cat" />
+    <label for="dogCategory">Dog</label>
+    <input type="radio" id="dogCategory" name="animalType" value="dog" />
+    <label for="horseCategory">Horse</label>
+    <input type="radio" id="horseCategory" name="animalType" value="horse" />
+
     <button id="getFacts">Get fact</button>
 
     <script>
@@ -21,6 +29,9 @@
       btnGetFatcs.addEventListener("click", getFact);
 
       function getFact() {
+        let checkedAnimalInput = document.querySelector(
+          "input[name='animalType']:checked"
+        );
         $.get(
           `https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1`,
           (data) => {
