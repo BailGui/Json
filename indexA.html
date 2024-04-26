@@ -1,76 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AJAX JQuery</title>
-  </head>
-  <body>
-    <div id="factsContainer"></div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div id="factsContainer">
 
+    </div>
+
+    <input type="radio" id="catCategory" name="animalType" value="cat" checked>
     <label for="catCategory">Cat</label>
-    <input type="radio" id="catCategory" name="animalType" value="cat" />
+    <input type="radio" id="dogCategory" name="animalType" value="dog">
     <label for="dogCategory">Dog</label>
-    <input type="radio" id="dogCategory" name="animalType" value="dog" />
+    <input type="radio" id="horseCategory" name="animalType" value="horse">
     <label for="horseCategory">Horse</label>
-    <input type="radio" id="horseCategory" name="animalType" value="horse" />
-    <br />
-    <input
-      type="range"
-      id="factsRange"
-      value="1"
-      min="1"
-      max="10"
-      oninput="this.nextElementSibling.value = this.value"
-    />
-    <output>1</output>
-    <br />
 
+    </br>
+    <input type="range" id="factsRange" value="1" min="1" max="10" oninput="this.nextElementSibling.value = this.value">
+<output>1</output>
+
+    </br>
     <button id="getFacts">Get fact</button>
 
     <script>
-      let factsContainer = document.querySelector("#factsContainer"),
-        btnGetFatcs = document.querySelector("#getFacts"),
-        factsRange = document.querySelector("#factsRange");
+        let factsContainer = document.querySelector('#factsContainer'),
+            btnGetFacts    = document.querySelector('#getFacts'),
+            factsRange     = document.querySelector('#factsRange');
 
-      btnGetFatcs.addEventListener("click", getFact);
+        btnGetFacts.addEventListener('click', getFact);
 
-      function getFact() {
-        let checkedAnimalInput = document.querySelector(
-          "input[name='animalType']:checked"
-        );
-        (animalCategory = checkedAnimalCategory.value),
-          (factsAmount = factsRange.value);
+        function getFact() {
+            let checkedAnimalCategory = document.querySelector("input[name='animalType']:checked"),
+                animalCategory        = checkedAnimalCategory.value,
+                factsAmount           = factsRange.value;
 
-        $.get(
-          `https://cat-fact.herokuapp.com/facts/random?animal_type=${animalCategory}&amount=${factsAmount}`,
-          (data) => {
-            let isArray = Array.isArray(data);
 
-            factsContainer.replaceChildren();
+            $.get(`https://cat-fact.herokuapp.com/facts/random?animal_type=${animalCategory}&amount=${factsAmount}`, (data) => {
+                let isArray = Array.isArray(data);
 
-            if (isArray) {
-              for (let fact of data) {
-                let fact = data.text;
-                factsContainer.insertAdjacentHTML(
-                  "beforeend",
-                  `<p>${fact}</p>`
-                );
-              }
-            } else {
-              let fact = data.text;
-              factsContainer.insertAdjacentHTML("beforeend", `<p>${fact}</p>`);
-            }
-          }
-        );
-      }
+                factsContainer.replaceChildren();
 
-      getFact();
+                if (isArray) {
+                    for(let fact of data) {
+                        let factText = fact.text;
+                        factsContainer.insertAdjacentHTML('beforeend', `<p>${factText}</p>`);
+                    }
+                } else {
+                    let factText = data.text;
+                    factsContainer.insertAdjacentHTML('beforeend', `<p>${factText}</p>`);
+                }
+            })
+        };
+        
+        getFact();
     </script>
-  </body>
+</body>
 </html>
