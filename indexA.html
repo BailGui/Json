@@ -19,12 +19,24 @@
     <input type="radio" id="dogCategory" name="animalType" value="dog" />
     <label for="horseCategory">Horse</label>
     <input type="radio" id="horseCategory" name="animalType" value="horse" />
+    <br />
+    <input
+      type="range"
+      id="factsRange"
+      value="1"
+      min="1"
+      max="10"
+      oninput="this.nextElementSibling.value = this.value"
+    />
+    <output>1</output>
+    <br />
 
     <button id="getFacts">Get fact</button>
 
     <script>
       let factsContainer = document.querySelector("#factsContainer"),
-        btnGetFatcs = document.querySelector("#getFacts");
+        btnGetFatcs = document.querySelector("#getFacts"),
+        factsRange = document.querySelector("#factsRange");
 
       btnGetFatcs.addEventListener("click", getFact);
 
@@ -32,14 +44,28 @@
         let checkedAnimalInput = document.querySelector(
           "input[name='animalType']:checked"
         );
+        (animalCategory = checkedAnimalCategory.value),
+          (factsAmount = factsRange.value);
+
         $.get(
-          `https://cat-fact.herokuapp.com/facts/random?animal_type=cat&amount=1`,
+          `https://cat-fact.herokuapp.com/facts/random?animal_type=${animalCategory}&amount=${factsAmount}`,
           (data) => {
-            console.log(data);
-            let fact = data.text;
+            let isArray = Array.isArray(data);
 
             factsContainer.replaceChildren();
-            factsContainer.insertAdjacentHTML("beforeend", `<p>${fact}</p>`);
+
+            if (isArray) {
+              for (let fact of data) {
+                let fact = data.text;
+                factsContainer.insertAdjacentHTML(
+                  "beforeend",
+                  `<p>${fact}</p>`
+                );
+              }
+            } else {
+              let fact = data.text;
+              factsContainer.insertAdjacentHTML("beforeend", `<p>${fact}</p>`);
+            }
           }
         );
       }
