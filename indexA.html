@@ -26,6 +26,8 @@
           (data) => {
             console.log(data);
             let fact = data.text;
+
+            factsContainer.replaceChildren();
             factsContainer.insertAdjacentHTML("beforeend", `<p>${fact}</p>`);
           }
         );
